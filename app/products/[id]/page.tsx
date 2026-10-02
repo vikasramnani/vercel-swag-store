@@ -18,9 +18,16 @@ async function StockLine({ params }: { params: Promise<{ id: string }> }) {
   const stock = stockBody.data;
 
   return (
-    <div className="mt-4 flex items-center gap-4">
+    <div className="mt-4 flex flex-wrap items-center gap-4">
       <p className="text-sm text-zinc-400">{stock.stock} in stock</p>
       <QuantitySelector stock={stock.stock} />
+      <button
+        type="button"
+        disabled={stock.stock === 0}
+        className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-500"
+      >
+        Add to Cart
+      </button>
     </div>
   );
 }
