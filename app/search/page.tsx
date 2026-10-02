@@ -3,6 +3,14 @@ import { Suspense } from "react";
 
 type SearchParams = Promise<{ search?: string; category?: string }>;
 
+type CatalogProduct = {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  images: string[];
+};
+
 function productQuery(search?: string, category?: string) {
   const parts = ["limit=5"];
   if (search) {
@@ -115,7 +123,7 @@ async function SearchResults({ searchParams }: { searchParams: SearchParams }) {
     },
   );
   const body = await response.json();
-  const products = body.data;
+  const products = body.data as CatalogProduct[];
 
   if (products.length === 0) {
     return <p className="mt-4 text-zinc-400">No products found.</p>;

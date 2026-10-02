@@ -23,7 +23,15 @@ async function PromoBanner() {
   );
 }
 
-async function getFeaturedProducts() {
+type CatalogProduct = {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  images: string[];
+};
+
+async function getFeaturedProducts(): Promise<CatalogProduct[]> {
   "use cache";
   const response = await fetch(
     "https://vercel-swag-store-api.vercel.app/api/products?featured=true",
@@ -36,7 +44,7 @@ async function getFeaturedProducts() {
   );
 
   const body = await response.json();
-  return body.data;
+  return body.data as CatalogProduct[];
 }
 
 export default async function Home() {

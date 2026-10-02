@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { QuantitySelector } from "../../components/quantity-selector";
 
 async function StockLine({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -16,7 +17,12 @@ async function StockLine({ params }: { params: Promise<{ id: string }> }) {
   const stockBody = await stockResponse.json();
   const stock = stockBody.data;
 
-  return <p className="mt-4 text-sm text-zinc-400">{stock.stock} in stock</p>;
+  return (
+    <div className="mt-4 flex items-center gap-4">
+      <p className="text-sm text-zinc-400">{stock.stock} in stock</p>
+      <QuantitySelector stock={stock.stock} />
+    </div>
+  );
 }
 
 async function getProduct(id: string) {
