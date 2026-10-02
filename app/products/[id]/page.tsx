@@ -32,11 +32,15 @@ export default async function ProductPage({
       const stock = stockBody.data;
     return (
       <main>
-        <img src={product.images[0]} alt={product.name} width={400} />
-        <h1>{product.name}</h1>
-        <p>${(product.price / 100).toFixed(2)}</p>
-        <p>{product.description}</p>
-        <p>{stock.stock} in stock</p>
+        <img
+          src={product.images[0]}
+          alt={product.name}
+          className="h-80 w-full rounded-lg object-cover"
+        />
+        <h1 className="mt-6 text-3xl font-semibold">{product.name}</h1>
+        <p className="mt-2 text-lg">${(product.price / 100).toFixed(2)}</p>
+        <p className="mt-4 text-zinc-300">{product.description}</p>
+        <p className="mt-4 text-sm text-zinc-400">{stock.stock} in stock</p>
       </main>
     );
   }
