@@ -23,7 +23,8 @@ async function PromoBanner() {
   );
 }
 
-export default async function Home() {
+async function getFeaturedProducts() {
+  "use cache";
   const response = await fetch(
     "https://vercel-swag-store-api.vercel.app/api/products?featured=true",
     {
@@ -35,6 +36,11 @@ export default async function Home() {
   );
 
   const body = await response.json();
+  return body.data;
+}
+
+export default async function Home() {
+  const products = await getFeaturedProducts();
 
   return (
     <main>
@@ -46,7 +52,7 @@ export default async function Home() {
         <PromoBanner />
       </Suspense>
       <ul className="mt-8 divide-y divide-zinc-800">
-        {body.data.map((product) => (
+        {products.map((product) => (
           <li key={product.id}>
             <Link
               href={`/products/${product.slug}`}

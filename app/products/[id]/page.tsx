@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 
-async function StockLine({ id }: { id: string }) {
+async function StockLine({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
   const stockResponse = await fetch(
     `https://vercel-swag-store-api.vercel.app/api/products/${id}/stock`,
     {
@@ -17,13 +19,8 @@ async function StockLine({ id }: { id: string }) {
   return <p className="mt-4 text-sm text-zinc-400">{stock.stock} in stock</p>;
 }
 
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-
+async function getProduct(id: string) {
+  "use cache";
   const response = await fetch(
     `https://vercel-swag-store-api.vercel.app/api/products/${id}`,
     {
@@ -35,10 +32,19 @@ export default async function ProductPage({
   );
 
   const body = await response.json();
-  const product = body.data;
+  return body.data;
+}
+
+async function ProductDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const product = await getProduct(id);
 
   return (
-    <main>
+    <>
       <img
         src={product.images[0]}
         alt={product.name}
@@ -47,12 +53,30 @@ export default async function ProductPage({
       <h1 className="mt-6 text-3xl font-semibold">{product.name}</h1>
       <p className="mt-2 text-lg">${(product.price / 100).toFixed(2)}</p>
       <p className="mt-4 text-zinc-300">{product.description}</p>
+    </>
+  );
+}
+
+export default function ProductPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  return (
+    <main>
+      <Suspense
+        fallback={
+          <p className="mt-6 text-sm text-zinc-400">Loading product…</p>
+        }
+      >
+        <ProductDetails params={params} />
+      </Suspense>
       <Suspense
         fallback={
           <p className="mt-4 text-sm text-zinc-400">Checking stock…</p>
         }
       >
-        <StockLine id={id} />
+        <StockLine params={params} />
       </Suspense>
     </main>
   );
