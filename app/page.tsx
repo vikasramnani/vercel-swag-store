@@ -1,4 +1,27 @@
 import Link from "next/link";
+import { Suspense } from "react";
+
+async function PromoBanner() {
+  const promoResponse = await fetch(
+    "https://vercel-swag-store-api.vercel.app/api/promotions",
+    {
+      headers: {
+        "x-vercel-protection-bypass":
+          process.env.VERCEL_PROTECTION_BYPASS ?? "",
+      },
+    },
+  );
+
+  const promoBody = await promoResponse.json();
+  const promo = promoBody.data;
+
+  return (
+    <p className="mt-6 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm">
+      <span className="font-semibold">{promo.title}.</span> {promo.description}{" "}
+      Code <span className="font-semibold">{promo.code}</span>
+    </p>
+  );
+}
 
 export default async function Home() {
   const response = await fetch(
@@ -13,27 +36,15 @@ export default async function Home() {
 
   const body = await response.json();
 
-  const promoResponse = await fetch(
-    "https://vercel-swag-store-api.vercel.app/api/promotions",
-    {
-      headers: {
-        "x-vercel-protection-bypass":
-          process.env.VERCEL_PROTECTION_BYPASS ?? "",
-      },
-    },
-  );
-  
-  const promoBody = await promoResponse.json();
-  const promo = promoBody.data;
-
   return (
     <main>
       <h1 className="text-3xl font-semibold">Vercel Swag Store</h1>
       <p className="mt-2 text-zinc-400">Official Vercel merchandise.</p>
-      <p className="mt-6 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm">
-        <span className="font-semibold">{promo.title}.</span> {promo.description}{" "}
-        Code <span className="font-semibold">{promo.code}</span>
-      </p>
+      <Suspense
+        fallback={<p className="mt-6 text-sm text-zinc-400">Loading the sale…</p>}
+      >
+        <PromoBanner />
+      </Suspense>
       <ul className="mt-8 divide-y divide-zinc-800">
         {body.data.map((product) => (
           <li key={product.id}>
