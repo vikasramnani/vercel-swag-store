@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -6,6 +8,9 @@ const nextConfig: NextConfig = {
     fetches: {
       fullUrl: true,
     },
+  },
+  turbopack: {
+    root: path.dirname(fileURLToPath(import.meta.url)),
   },
 };
 
