@@ -130,19 +130,19 @@ async function SearchResults({ searchParams }: { searchParams: SearchParams }) {
   }
 
   return (
-    <ul className="mt-8 divide-y divide-zinc-800">
+    <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
       {products.map((product) => (
         <li key={product.id}>
           <Link
             href={`/products/${product.slug}`}
-            className="flex items-center gap-4 py-3 hover:text-zinc-300"
+            className="flex h-full flex-col gap-3 rounded-lg border border-zinc-800 p-3 hover:text-zinc-300"
           >
             <img
               src={product.images[0]}
               alt=""
-              className="h-14 w-14 rounded-md object-cover"
+              className="h-40 w-full rounded-md object-cover"
             />
-            <span className="flex-1">{product.name}</span>
+            <span>{product.name}</span>
             <span>${(product.price / 100).toFixed(2)}</span>
           </Link>
         </li>
