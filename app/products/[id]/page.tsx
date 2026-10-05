@@ -1,7 +1,18 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { AddToCartForm } from "../../components/add-to-cart-form";
 import { getProduct } from "../get-product";
 import { getStock } from "../get-stock";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const product = await getProduct(id);
+  return { title: product?.name ?? "Product" };
+}
 
 async function StockLine({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

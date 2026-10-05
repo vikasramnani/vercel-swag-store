@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { placeOrder } from "../cart/actions";
@@ -84,6 +85,10 @@ async function CheckoutScreen() {
     </>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Checkout",
+};
 
 export default function CheckoutPage() {
   return (

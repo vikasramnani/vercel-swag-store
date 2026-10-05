@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { CategorySelect } from "../components/category-select";
@@ -139,6 +140,10 @@ async function SearchResults({ searchParams }: { searchParams: SearchParams }) {
     </ul>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Search",
+};
 
 export default async function SearchPage({
   searchParams,

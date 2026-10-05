@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { removeCartItem, updateCartQuantity } from "./actions";
@@ -88,6 +89,10 @@ async function CartContents() {
     </>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Cart",
+};
 
 export default function CartPage() {
   return (

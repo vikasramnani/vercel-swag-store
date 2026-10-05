@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { getCart } from "../../cart/get-cart";
@@ -18,6 +19,10 @@ async function CartAfterPayment() {
     </p>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Payment successful",
+};
 
 export default function ThanksPage() {
   return (
