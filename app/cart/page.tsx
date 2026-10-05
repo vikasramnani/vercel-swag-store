@@ -79,6 +79,12 @@ async function CartContents() {
         ))}
       </ul>
       <p className="mt-6 text-lg">Subtotal {dollars(cart.subtotal)}</p>
+      <Link
+        href="/checkout"
+        className="mt-4 inline-block rounded-md bg-white px-4 py-2 text-sm font-semibold text-black"
+      >
+        Checkout
+      </Link>
     </>
   );
 }

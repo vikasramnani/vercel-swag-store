@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { swagApi, swagHeaders } from "./swag";
 
 export type AddToCartState = { message: string } | null;
@@ -128,4 +129,32 @@ export async function removeCartItem(formData: FormData) {
 
   rememberCart(jar, token);
   revalidatePath("/", "layout");
+}
+
+export async function placeOrder() {
+  const jar = await cookies();
+  const token = jar.get("cart-token")?.value;
+  if (token) {
+    const response = await fetch(`${swagApi}/cart`, {
+      headers: swagHeaders(token),
+      cache: "no-store",
+    });
+    if (response.ok) {
+      const body = await response.json();
+      const items = body.data?.items ?? [];
+      for (const item of items) {
+        const productId = String(item?.productId ?? "");
+        if (!productId) continue;
+        await fetch(`${swagApi}/cart/${encodeURIComponent(productId)}`, {
+          method: "DELETE",
+          headers: swagHeaders(token),
+          cache: "no-store",
+        });
+      }
+    }
+    jar.delete("cart-token");
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/checkout/thanks");
 }
