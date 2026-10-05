@@ -41,6 +41,8 @@ Cache Components will not block the saved shell on live work. Each live read sit
 
 The product photo and the product text are sibling holes. Both call the cached `getProduct`. Stock is a third hole, and it is not cached, so the name can appear while the count is still loading.
 
+`generateStaticParams` in `app/products/[id]/page.tsx` lists every product slug. The build saves a page for each one with the photo, name, price, and description already in the HTML. "Checking stock…" is still the live piece. A slug that was not in that list shows "Loading product…" on the first visit. `npm run dev` still shows that sentence. The saved page is what `npm start` and the deployed site serve.
+
 ## `connection()`
 
 The footer year is `new Date().getFullYear()`. Under Cache Components that read is dynamic. `CopyrightYear` calls `connection()` from `next/server` before reading the date, and the year is inside a Suspense boundary. The rest of the footer can be part of the shell. The year waits.

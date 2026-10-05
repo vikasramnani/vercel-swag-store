@@ -1,8 +1,23 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { AddToCartForm } from "../../components/add-to-cart-form";
+import { swagApi, swagHeaders } from "../../cart/swag";
 import { getProduct } from "../get-product";
 import { getStock } from "../get-stock";
+
+// The build saves one page per slug. The photo and the name are in that HTML.
+// Stock stays a live read, so "Checking stock…" is still the first line for it.
+export async function generateStaticParams() {
+  const response = await fetch(`${swagApi}/products?limit=100`, {
+    headers: swagHeaders(),
+  });
+  const body = await response.json();
+  const products = (body.data ?? []) as { slug?: string }[];
+  return products
+    .map((product) => product.slug)
+    .filter((slug): slug is string => Boolean(slug))
+    .map((id) => ({ id }));
+}
 
 export async function generateMetadata({
   params,
