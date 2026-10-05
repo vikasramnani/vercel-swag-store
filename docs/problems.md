@@ -1,6 +1,6 @@
 # Problems and corrections
 
-[Index](README.md) · [Assistant](assistant.md) · [Measurements](measurements.md)
+[Index](README.md) · [Assistant](assistant.md) · [Measurements](measurements.md) · [Future improvements](future-improvements.md)
 
 Each item is something we saw in this project. The correction is the code that is in the repo now.
 

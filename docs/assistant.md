@@ -1,6 +1,6 @@
 # Shopping assistant
 
-[Index](README.md) · [Architecture](architecture.md) · [Problems](problems.md)
+[Index](README.md) · [Architecture](architecture.md) · [Problems](problems.md) · [Future improvements](future-improvements.md)
 
 The panel is `app/components/assistant-panel.tsx`. It is a client component. It does not call the catalog and it does not see `AI_GATEWAY_API_KEY`. It calls the Server Action `askAssistant` in `app/assistant/ask.ts`.
 

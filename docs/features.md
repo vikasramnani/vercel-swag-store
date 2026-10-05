@@ -1,4 +1,4 @@
-# Next.js 16 features in this app
+# Technical features
 
 [Index](README.md) · [Architecture](architecture.md) · [Measurements](measurements.md)
 

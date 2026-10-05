@@ -8,10 +8,11 @@ The write-up for review is in [`docs/`](docs/README.md).
 |---|---|
 | [What we built](docs/what-we-built.md) | Routes, what is included, what is not a real payment |
 | [Architecture](docs/architecture.md) | Where work runs, the two keys, the cart cookie, why there is no MCP server |
-| [Next.js 16](docs/next-16.md) | Server Components, Cache Components, Suspense, Server Actions, metadata |
+| [Technical features](docs/features.md) | Server Components, Cache Components, Suspense, Server Actions, metadata |
 | [Assistant](docs/assistant.md) | The model loop, the four tools, and the Yes button |
 | [Problems](docs/problems.md) | What broke, and the change that fixed it |
 | [Measurements](docs/measurements.md) | Dev-server timings from 2 Oct 2026, and the 5 Oct 2026 production build |
+| [Future improvements](docs/future-improvements.md) | Stock, simultaneous carts and payments, assistant context, phrase search, API speed |
 
 ## Stack
 

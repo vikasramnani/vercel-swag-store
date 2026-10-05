@@ -1,6 +1,6 @@
 # Measurements
 
-[Index](README.md) · [Next.js 16](next-16.md) · [Problems](problems.md)
+[Index](README.md) · [Technical features](features.md) · [Problems](problems.md)
 
 These are recorded runs. They are not a current production benchmark. The cache samples are from `npm run dev` on this machine on 2 Oct 2026, before the light layout. The Lighthouse pass is from the same day, against `next start`, and was not repeated after the homepage redesign. The build table is from 5 Oct 2026 and includes the analytics packages.
 

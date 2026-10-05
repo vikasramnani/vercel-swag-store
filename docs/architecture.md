@@ -1,6 +1,6 @@
 # Architecture
 
-[Index](README.md) · [What we built](what-we-built.md) · [Next.js 16](next-16.md)
+[Index](README.md) · [What we built](what-we-built.md) · [Technical features](features.md)
 
 ## Who calls the API
 
