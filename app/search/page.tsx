@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { CategorySelect } from "../components/category-select";
 import { SearchBox } from "../components/search-box";
 
 type SearchParams = Promise<{ search?: string; category?: string }>;
@@ -50,18 +51,10 @@ async function SearchForm({
   return (
     <form action="/search" className="mt-6 flex flex-wrap gap-2">
       <SearchBox wordInTheAddress={search ?? ""} />
-      <select
-        name="category"
-        defaultValue={category ?? ""}
-        className="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white"
-      >
-        <option value="">All categories</option>
-        {categories.map((item) => (
-          <option key={item.slug} value={item.slug}>
-            {item.name}
-          </option>
-        ))}
-      </select>
+      <CategorySelect
+        categories={categories}
+        selectedCategory={category ?? ""}
+      />
       <button
         type="submit"
         className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black"

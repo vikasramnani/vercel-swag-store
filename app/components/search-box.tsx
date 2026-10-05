@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 // "shi" becomes /search?search=shi.
 // Under 3 characters, the word is left out and the page shows the default five.
 // A chosen category stays in the address.
-function buildSearchAddress(typedWord: string, form: HTMLFormElement | null) {
+export function buildSearchAddress(typedWord: string, form: HTMLFormElement | null) {
   const selectedCategory = form
     ? String(new FormData(form).get("category") ?? "")
     : "";
