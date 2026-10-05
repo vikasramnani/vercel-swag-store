@@ -12,11 +12,13 @@ export async function generateMetadata({
   const { id } = await params;
   const product = await getProduct(id);
   const name = product?.name ?? "Product";
+  const photo = product?.images?.[0];
   return {
     title: name,
     openGraph: {
       title: name,
       description: product?.description || "Official Vercel merchandise.",
+      ...(photo ? { images: [{ url: photo, alt: name }] } : {}),
     },
   };
 }

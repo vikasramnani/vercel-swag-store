@@ -73,11 +73,11 @@ The assistant's `askAssistant` is also `"use server"`. The panel calls it. It do
 
 Home sets no title of its own, so the tab is "Vercel Swag Store". Search, Cart, Checkout, and the thanks page export a short title. The template adds the store name, so Search's tab is "Search · Vercel Swag Store".
 
-A product cannot use a fixed string. `generateMetadata` in `app/products/[id]/page.tsx` calls the cached `getProduct` and returns that name as both `title` and `openGraph.title`, and the product description as `openGraph.description`. A child `openGraph` object replaces the parent's, so the product page sets both fields. If it set only the title, the share description would disappear. Search does not set `openGraph`, so a shared search link keeps the store title and description.
+A product cannot use a fixed string. `generateMetadata` in `app/products/[id]/page.tsx` calls the cached `getProduct` and returns that name as both `title` and `openGraph.title`, and the product description as `openGraph.description`. It also sets `openGraph.images` to that product's photo. A child `openGraph` object replaces the parent's, so the product page sets those fields itself. If it set only the title, the share description and the photo would disappear. Search does not set `openGraph`, so a shared search link keeps the store title, description, and image.
 
-Checked in the browser on 5 Oct 2026: Home's tags were the store name and "Official Vercel merchandise." The crewneck and the water bottle had two different `og:title` values and two different descriptions.
+The image for every other page is `app/opengraph-image.tsx`. It draws the mark from `public/vercel.svg` (a white triangle) on a black field, as a 1200×630 PNG. Home, Search, Cart, Checkout, and the thanks page use that file. They do not set their own `openGraph.images`.
 
-There is no Open Graph image.
+Checked in the browser on 5 Oct 2026: Home and Search had `og:image` pointing at `/opengraph-image`, alt "Vercel". The crewneck's `og:image` was the shirt PNG from the catalog, and its `og:title` and description were that product's own text.
 
 ## Speed Insights and Web Analytics
 
