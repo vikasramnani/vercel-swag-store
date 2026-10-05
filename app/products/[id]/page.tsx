@@ -1,39 +1,13 @@
 import { Suspense } from "react";
 import { AddToCartForm } from "../../components/add-to-cart-form";
+import { getProduct } from "../get-product";
+import { getStock } from "../get-stock";
 
 async function StockLine({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-
-  const stockResponse = await fetch(
-    `https://vercel-swag-store-api.vercel.app/api/products/${id}/stock`,
-    {
-      headers: {
-        "x-vercel-protection-bypass":
-          process.env.VERCEL_PROTECTION_BYPASS ?? "",
-      },
-    },
-  );
-
-  const stockBody = await stockResponse.json();
-  const stock = stockBody.data;
+  const stock = await getStock(id);
 
   return <AddToCartForm productId={id} stock={stock.stock} />;
-}
-
-async function getProduct(id: string) {
-  "use cache";
-  const response = await fetch(
-    `https://vercel-swag-store-api.vercel.app/api/products/${id}`,
-    {
-      headers: {
-        "x-vercel-protection-bypass":
-          process.env.VERCEL_PROTECTION_BYPASS ?? "",
-      },
-    },
-  );
-
-  const body = await response.json();
-  return body.data;
 }
 
 async function ProductDetails({

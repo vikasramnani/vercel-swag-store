@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { AssistantPanel } from "./assistant-panel";
 import { CartBadge, CartLink } from "./cart-badge";
 
 export function Header() {
@@ -15,6 +16,7 @@ export function Header() {
         <Link href="/search" className="hover:underline">
           Search
         </Link>
+        <AssistantPanel />
         <Suspense fallback={<CartLink count={null} />}>
           <CartBadge />
         </Suspense>
