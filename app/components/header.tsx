@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import { CartBadge, CartLink } from "./cart-badge";
 
 export function Header() {
   return (
@@ -6,13 +8,16 @@ export function Header() {
       <Link href="/" className="text-lg font-semibold">
         Vercel Swag Store
       </Link>
-      <nav className="flex gap-4 text-sm">
+      <nav className="flex items-center gap-4 text-sm">
         <Link href="/" className="hover:underline">
           Home
         </Link>
         <Link href="/search" className="hover:underline">
           Search
         </Link>
+        <Suspense fallback={<CartLink count={null} />}>
+          <CartBadge />
+        </Suspense>
       </nav>
     </header>
   );

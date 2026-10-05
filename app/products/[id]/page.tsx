@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { QuantitySelector } from "../../components/quantity-selector";
+import { AddToCartForm } from "../../components/add-to-cart-form";
 
 async function StockLine({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -17,19 +17,7 @@ async function StockLine({ params }: { params: Promise<{ id: string }> }) {
   const stockBody = await stockResponse.json();
   const stock = stockBody.data;
 
-  return (
-    <div className="mt-4 flex flex-wrap items-center gap-4">
-      <p className="text-sm text-zinc-400">{stock.stock} in stock</p>
-      <QuantitySelector stock={stock.stock} />
-      <button
-        type="button"
-        disabled={stock.stock === 0}
-        className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-500"
-      >
-        Add to Cart
-      </button>
-    </div>
-  );
+  return <AddToCartForm productId={id} stock={stock.stock} />;
 }
 
 async function getProduct(id: string) {
