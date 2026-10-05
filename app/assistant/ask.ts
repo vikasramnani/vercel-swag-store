@@ -2,8 +2,9 @@
 
 import { generateText, isStepCount, tool } from "ai";
 import { z } from "zod";
-import { getProduct } from "../products/get-product";
-import { getStock } from "../products/get-stock";
+import { getProduct } from "./get-product";
+import { getStock } from "./get-stock";
+import { proposeAdd } from "./propose-add";
 import { searchProducts } from "./search-products";
 
 export type AssistantProduct = {
@@ -29,8 +30,8 @@ export type AssistantReply = {
 
 const assistantModel = "openai/gpt-4o-mini";
 
-// The browser sends the sentence. This function sends it to the model,
-// runs searchProducts when the model picks that name, then returns the reply.
+// The browser sends the sentence. Each tool lives in its own file.
+// This function lists those tools for the model, then returns the reply.
 function productsFromTheSearch(steps: { toolResults: { output: unknown }[] }[]) {
   const found: AssistantProduct[] = [];
   for (const step of steps) {
@@ -115,19 +116,7 @@ export async function askAssistant(sentence: string): Promise<AssistantReply> {
           inputSchema: z.object({
             id: z.string().describe("Product slug or id"),
           }),
-          execute: async ({ id }) => {
-            const product = await getProduct(id);
-            if (!product?.name) return { product: null };
-            return {
-              product: {
-                name: product.name,
-                path: `/products/${product.slug}`,
-                price: `$${(product.price / 100).toFixed(2)}`,
-                image: product.images?.[0] ?? "",
-                description: product.description,
-              },
-            };
-          },
+          execute: async ({ id }) => getProduct(id),
         }),
         getStock: tool({
           description:
@@ -135,13 +124,7 @@ export async function askAssistant(sentence: string): Promise<AssistantReply> {
           inputSchema: z.object({
             id: z.string().describe("Product slug or id"),
           }),
-          execute: async ({ id }) => {
-            const stock = await getStock(id);
-            return {
-              stock: Number(stock?.stock ?? 0),
-              inStock: Boolean(stock?.inStock),
-            };
-          },
+          execute: async ({ id }) => getStock(id),
         }),
         proposeAdd: tool({
           description:
@@ -150,18 +133,7 @@ export async function askAssistant(sentence: string): Promise<AssistantReply> {
             id: z.string().describe("Product slug or id"),
             quantity: z.number().int().min(1).describe("How many to add"),
           }),
-          execute: async ({ id, quantity }) => {
-            const product = await getProduct(id);
-            if (!product?.slug) return { proposal: null };
-            return {
-              proposal: {
-                name: product.name,
-                productId: product.slug,
-                quantity,
-                path: `/products/${product.slug}`,
-              },
-            };
-          },
+          execute: async ({ id, quantity }) => proposeAdd(id, quantity),
         }),
       },
     });
