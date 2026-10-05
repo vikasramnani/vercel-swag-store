@@ -11,7 +11,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const product = await getProduct(id);
-  return { title: product?.name ?? "Product" };
+  const name = product?.name ?? "Product";
+  return {
+    title: name,
+    openGraph: {
+      title: name,
+      description: product?.description || "Official Vercel merchandise.",
+    },
+  };
 }
 
 async function StockLine({ params }: { params: Promise<{ id: string }> }) {

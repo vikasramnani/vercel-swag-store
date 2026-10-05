@@ -21,6 +21,10 @@ export const metadata: Metadata = {
     template: "%s · Vercel Swag Store",
   },
   description: "Official Vercel merchandise.",
+  openGraph: {
+    title: "Vercel Swag Store",
+    description: "Official Vercel merchandise.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
