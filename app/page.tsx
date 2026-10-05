@@ -16,7 +16,7 @@ async function PromoBanner() {
   const promo = promoBody.data;
 
   return (
-    <p className="mt-6 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm">
+    <p className="border-t border-white/20 bg-black px-6 py-3 text-center text-sm text-white">
       <span className="font-semibold">{promo.title}.</span> {promo.description}{" "}
       Code <span className="font-semibold">{promo.code}</span>
     </p>
@@ -51,32 +51,54 @@ export default async function Home() {
   const products = await getFeaturedProducts();
 
   return (
-    <main>
-      <h1 className="text-3xl font-semibold">Vercel Swag Store</h1>
-      <p className="mt-2 text-zinc-400">Official Vercel merchandise.</p>
+    <main className="relative left-1/2 w-screen -translate-x-1/2 -my-8 bg-white font-sans text-zinc-950">
       <Suspense
-        fallback={<p className="mt-6 text-sm text-zinc-400">Loading the sale…</p>}
+        fallback={
+          <p className="border-t border-white/20 bg-black px-6 py-3 text-center text-sm text-white">
+            Loading the sale…
+          </p>
+        }
       >
         <PromoBanner />
       </Suspense>
-      <ul className="mt-8 divide-y divide-zinc-800">
-        {products.map((product) => (
-          <li key={product.id}>
-            <Link
-              href={`/products/${product.slug}`}
-              className="flex items-center gap-4 py-3 hover:text-zinc-300"
-            >
-              <img
-                src={product.images[0]}
-                alt=""
-                className="h-14 w-14 rounded-md object-cover"
-              />
-              <span className="flex-1">{product.name}</span>
-              <span>${(product.price / 100).toFixed(2)}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
+        <h1 className="max-w-xl text-5xl font-semibold tracking-tight sm:text-6xl sm:leading-[1.05]">
+        Merch That Deploys Instantly.
+        </h1>
+        <p className="mt-6 max-w-md text-lg text-zinc-500">
+          High-bandwidth swag for developers who spend more time in VS Code than
+          in physical stores. Ships globally without breaking the build.
+        </p>
+        <Link
+          href="/search"
+          className="mt-8 inline-block rounded-md bg-black px-5 py-3 text-sm font-medium text-white"
+        >
+          Browse All Products →
+        </Link>
+        <div className="mt-20 flex items-baseline justify-between gap-4">
+          <h2 className="text-2xl font-semibold tracking-tight">Featured Products</h2>
+          <Link href="/search" className="text-sm text-zinc-500 hover:text-zinc-950">
+            View all
+          </Link>
+        </div>
+        <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:grid-cols-3">
+          {products.map((product) => (
+            <li key={product.id}>
+              <Link href={`/products/${product.slug}`} className="block">
+                <img
+                  src={product.images[0]}
+                  alt=""
+                  className="aspect-square w-full object-contain"
+                />
+                <span className="mt-4 block font-medium">{product.name}</span>
+                <span className="mt-1 block text-zinc-500">
+                  ${(product.price / 100).toFixed(2)}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </main>
   );
 }

@@ -7,14 +7,14 @@ import { dollars, getCart } from "../cart/get-cart";
 function PaymentForm() {
   return (
     <form action={placeOrder} className="mt-8 flex max-w-sm flex-col gap-4">
-      <p className="text-sm text-zinc-400">
+      <p className="text-sm text-zinc-500">
         Practice payment. Nothing is charged, and this always succeeds.
       </p>
       <label className="flex flex-col gap-1 text-sm">
         Name on card
         <input
           autoComplete="off"
-          className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2"
+          className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950"
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
@@ -23,7 +23,7 @@ function PaymentForm() {
           inputMode="numeric"
           autoComplete="off"
           placeholder="4242 4242 4242 4242"
-          className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2"
+          className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950"
         />
       </label>
       <div className="flex gap-4">
@@ -32,7 +32,7 @@ function PaymentForm() {
           <input
             autoComplete="off"
             placeholder="12/28"
-            className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2"
+            className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950"
           />
         </label>
         <label className="flex flex-1 flex-col gap-1 text-sm">
@@ -40,13 +40,13 @@ function PaymentForm() {
           <input
             autoComplete="off"
             placeholder="123"
-            className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2"
+            className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950"
           />
         </label>
       </div>
       <button
         type="submit"
-        className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black"
+        className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white"
       >
         Pay
       </button>
@@ -59,9 +59,9 @@ async function CheckoutScreen() {
 
   if (cart.lines.length === 0) {
     return (
-      <p className="mt-6 text-zinc-400">
+      <p className="mt-6 text-zinc-500">
         Your cart is empty.{" "}
-        <Link href="/" className="text-white underline">
+        <Link href="/" className="text-zinc-950 underline">
           Keep shopping
         </Link>
       </p>
@@ -94,7 +94,7 @@ export default function CheckoutPage() {
   return (
     <main>
       <h1 className="text-3xl font-semibold">Checkout</h1>
-      <Suspense fallback={<p className="mt-6 text-sm text-zinc-400">Loading checkout…</p>}>
+      <Suspense fallback={<p className="mt-6 text-sm text-zinc-500">Loading checkout…</p>}>
         <CheckoutScreen />
       </Suspense>
     </main>

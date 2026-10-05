@@ -8,7 +8,7 @@ async function CopyrightYear() {
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-zinc-800 px-6 py-4 text-sm text-zinc-400">
+    <footer className="mt-auto border-t border-zinc-200 px-6 py-4 text-sm text-zinc-500">
       <p>
         ©{" "}
         <Suspense fallback={null}>

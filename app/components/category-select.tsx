@@ -29,7 +29,7 @@ export function CategorySelect({
       name="category"
       defaultValue={selectedCategory}
       onChange={whenCategoryChanges}
-      className="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white"
+      className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950"
     >
       <option value="">All categories</option>
       {categories.map((item) => (

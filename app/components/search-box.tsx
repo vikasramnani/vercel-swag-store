@@ -101,10 +101,10 @@ export function SearchBox({ wordInTheAddress }: { wordInTheAddress: string }) {
         onChange={whenLettersChange}
         placeholder="Search products"
         aria-describedby={showTypeAtLeastThreeHint ? "search-hint" : undefined}
-        className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-400"
+        className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950 placeholder:text-zinc-400"
       />
       {showTypeAtLeastThreeHint ? (
-        <p id="search-hint" className="mt-2 text-sm text-zinc-400">
+        <p id="search-hint" className="mt-2 text-sm text-zinc-500">
           Type at least 3 characters. Enter searches a shorter word.
         </p>
       ) : null}

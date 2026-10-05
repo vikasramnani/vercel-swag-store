@@ -5,7 +5,7 @@ import { CartBadge, CartLink } from "./cart-badge";
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between bg-zinc-950 px-6 py-4 text-white">
+    <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 bg-zinc-950 px-6 py-4 text-white">
       <Link href="/" className="text-lg font-semibold">
         Vercel Swag Store
       </Link>

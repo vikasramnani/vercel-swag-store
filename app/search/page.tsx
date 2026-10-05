@@ -58,7 +58,7 @@ async function SearchForm({
       />
       <button
         type="submit"
-        className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black"
+        className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white"
       >
         Search
       </button>
@@ -76,12 +76,12 @@ function SearchFormFallback({
       <input
         name="search"
         placeholder="Search products"
-        className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-400 sm:w-auto sm:flex-1"
+        className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950 placeholder:text-zinc-400 sm:w-auto sm:flex-1"
       />
       <select
         name="category"
         defaultValue=""
-        className="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white"
+        className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950"
       >
         <option value="">All categories</option>
         {categories.map((item) => (
@@ -92,7 +92,7 @@ function SearchFormFallback({
       </select>
       <button
         type="submit"
-        className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black"
+        className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white"
       >
         Search
       </button>
@@ -116,24 +116,23 @@ async function SearchResults({ searchParams }: { searchParams: SearchParams }) {
   const products = body.data as CatalogProduct[];
 
   if (products.length === 0) {
-    return <p className="mt-4 text-zinc-400">No products found.</p>;
+    return <p className="mt-4 text-zinc-500">No products found.</p>;
   }
 
   return (
-    <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:grid-cols-3">
       {products.map((product) => (
         <li key={product.id}>
-          <Link
-            href={`/products/${product.slug}`}
-            className="flex h-full flex-col gap-3 rounded-lg border border-zinc-800 p-3 hover:text-zinc-300"
-          >
+          <Link href={`/products/${product.slug}`} className="block">
             <img
               src={product.images[0]}
               alt=""
-              className="h-40 w-full rounded-md object-cover"
+              className="aspect-square w-full object-contain"
             />
-            <span>{product.name}</span>
-            <span>${(product.price / 100).toFixed(2)}</span>
+            <span className="mt-4 block font-medium">{product.name}</span>
+            <span className="mt-1 block text-zinc-500">
+              ${(product.price / 100).toFixed(2)}
+            </span>
           </Link>
         </li>
       ))}
@@ -155,12 +154,12 @@ export default async function SearchPage({
   return (
     <main>
       <h1 className="text-3xl font-semibold">Search</h1>
-      <p className="mt-2 text-zinc-400">Find products by name.</p>
+      <p className="mt-2 text-zinc-500">Find products by name.</p>
       <Suspense fallback={<SearchFormFallback categories={categories} />}>
         <SearchForm searchParams={searchParams} categories={categories} />
       </Suspense>
       <Suspense
-        fallback={<p className="mt-8 text-sm text-zinc-400">Searching…</p>}
+        fallback={<p className="mt-8 text-sm text-zinc-500">Searching…</p>}
       >
         <SearchResults searchParams={searchParams} />
       </Suspense>

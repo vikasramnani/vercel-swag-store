@@ -16,18 +16,18 @@ export function AddToCartForm({
 
   return (
     <form action={submitAddToCart} className="mt-4 flex flex-wrap items-center gap-4">
-      <p className="text-sm text-zinc-400">{stock} in stock</p>
+      <p className="text-sm text-zinc-500">{stock} in stock</p>
       <QuantitySelector stock={stock} />
       <input type="hidden" name="productId" value={productId} />
       <button
         type="submit"
         disabled={outOfStock || pending}
-        className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-500"
+        className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400"
       >
         Add to Cart
       </button>
       {state?.message ? (
-        <p className="text-sm text-zinc-300">{state.message}</p>
+        <p className="text-sm text-zinc-600">{state.message}</p>
       ) : null}
     </form>
   );

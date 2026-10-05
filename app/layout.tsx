@@ -32,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     
       <body className="min-h-full flex flex-col">
         <Header />
-        <div className="mx-auto w-full max-w-3xl flex-1 px-6 py-8">
+        <div className="mx-auto w-full max-w-6xl flex-1 px-6 py-8">
           {children}
         </div>
         <Footer />

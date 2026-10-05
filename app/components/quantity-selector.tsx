@@ -9,7 +9,7 @@ export function QuantitySelector({ stock }: { stock: number }) {
   const shown = max === 0 ? 0 : Math.min(max, Math.max(min, quantity));
 
   return (
-    <label className="flex items-center gap-3 text-sm text-zinc-400">
+    <label className="flex items-center gap-3 text-sm text-zinc-600">
       Quantity
       <input
         type="number"
@@ -30,7 +30,7 @@ export function QuantitySelector({ stock }: { stock: number }) {
           }
           setQuantity(Math.min(max, Math.max(min, next)));
         }}
-        className="w-20 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white disabled:cursor-not-allowed disabled:text-zinc-500"
+        className="w-20 rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-950 disabled:cursor-not-allowed disabled:text-zinc-400"
       />
     </label>
   );
