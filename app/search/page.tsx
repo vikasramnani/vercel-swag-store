@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { SearchBox } from "../components/search-box";
 
 type SearchParams = Promise<{ search?: string; category?: string }>;
 
@@ -48,12 +49,7 @@ async function SearchForm({
 
   return (
     <form action="/search" className="mt-6 flex flex-wrap gap-2">
-      <input
-        name="search"
-        defaultValue={search ?? ""}
-        placeholder="Search products"
-        className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-400 sm:w-auto sm:flex-1"
-      />
+      <SearchBox wordInTheAddress={search ?? ""} />
       <select
         name="category"
         defaultValue={category ?? ""}
