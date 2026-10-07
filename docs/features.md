@@ -41,7 +41,7 @@ Cache Components will not block the saved shell on live work. Each live read sit
 
 The product photo and the product text are sibling holes. Both call the cached `getProduct`. Stock is a third hole, and it is not cached, so the name can appear while the count is still loading.
 
-`generateStaticParams` in `app/products/[id]/page.tsx` lists every product slug. The build saves a page for each one with the photo, name, price, and description already in the HTML. "Checking stock…" is still the live piece. A slug that was not in that list shows "Loading product…" on the first visit. `npm run dev` still shows that sentence. The saved page is what `npm start` and the deployed site serve.
+`generateStaticParams` in `app/products/[id]/page.tsx` lists every product slug. The build saves a page for each one with the photo, name, price, and description already in the HTML. "Checking stock…" is still the live piece. A slug that was not in that list shows "Loading product…" on the first visit. `npm run dev` still shows that sentence. The saved page is what `npm start` and the deployed site serve. Why the product hole exists, and the timings, are in [Problems](problems.md).
 
 ## `connection()`
 

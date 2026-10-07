@@ -78,9 +78,22 @@ First paint 0.8s. Largest paint 27.9s. Time to interactive 27.9s. Blocking time 
 
 First paint 0.8s. Largest paint 2.4s. Time to interactive 2.4s. Blocking time 10ms. Layout shift 0.373. The shift was the product block arriving in the Suspense hole: the photo and the name were not in the first HTML.
 
-## Production build — 5 Oct 2026
+## Product page stream — 5 Oct 2026
 
-`npm run build`, Next.js 16.3.8, Cache Components on, TypeScript passed, 9 pages generated. Analytics and Speed Insights were in the layout for this run.
+`npm run dev`, `/products/black-crewneck-t-shirt`. Times are when each string first appeared in the HTML response.
+
+| | Both loading sentences | Shirt name | "in stock" |
+|---|---|---|---|
+| First request of that session | 0.90s | 3.44s | 4.53s |
+| Next request | 0.09s | 0.12s | 2.17s |
+
+The second request did not wait on the product API. The name followed the shell. Stock was still the long call.
+
+`npm start` on port 3001, after `generateStaticParams`, sent the name and "Checking stock…" at 0.07s. The stock number arrived at 3.2s. The saved file `black-crewneck-t-shirt.html` contains the name and "Checking stock…", and does not contain "Loading product…".
+
+## Production build — 5 Oct 2026, before product paths
+
+`npm run build`, Next.js 16.3.8, Cache Components on, TypeScript passed, 9 pages generated. Analytics and Speed Insights were in the layout for this run. This run had no `generateStaticParams`, so every product URL used the `/products/[id]` shell.
 
 | Route | Revalidate | Expire |
 |---|---|---|
@@ -89,5 +102,18 @@ First paint 0.8s. Largest paint 2.4s. Time to interactive 2.4s. Blocking time 10
 | `/products/[id]`, `/cart`, `/checkout`, `/checkout/thanks` | partial prerender | partial prerender |
 
 Every app route was marked Partial Prerender: prerendered HTML with dynamic server-streamed content.
+
+## Production build — 5 Oct 2026, with product paths
+
+The same command after `generateStaticParams`. TypeScript passed. 38 pages generated. The catalog list was 28 slugs (`limit=100`, `total` 28, one page).
+
+| Route | Revalidate | Expire |
+|---|---|---|
+| `/`, `/search` | 15m | 1y |
+| `/products/matte-black-stainless-steel-water-bottle` and 27 other slugs | 15m | 1y |
+| `/products/[id]` | partial prerender | partial prerender |
+| `/cart`, `/checkout`, `/checkout/thanks` | partial prerender | partial prerender |
+
+`/products/[id]` is the shell for a slug that was not in the list. It still contains "Loading product…" and "Checking stock…".
 
 Speed Insights has no score in this document. The dashboard fills after a visit to the deployed site. That visit had not been recorded here when these pages were written.

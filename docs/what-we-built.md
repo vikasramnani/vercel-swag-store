@@ -25,7 +25,7 @@ The headline and the sentence under it are written in `app/page.tsx`. They are n
 
 ## Product page
 
-`id` in the URL may be a slug, such as `black-crewneck-t-shirt`. The details call and the stock call are separate. The photo uses `object-contain` inside a square, so the whole product is visible. Add to Cart is disabled when the stock read is 0. The quantity box will not stay above that count.
+`id` in the URL may be a slug, such as `black-crewneck-t-shirt`. `generateStaticParams` lists every slug from `GET /api/products?limit=100`, and the build saves a page for each one. The details call and the stock call are separate. The saved page includes the photo and the name. Stock is still read on the visit. The problem and the timings are in [Problems](problems.md). The photo uses `object-contain` inside a square, so the whole product is visible. Add to Cart is disabled when the stock read is 0. The quantity box will not stay above that count.
 
 ## Search
 

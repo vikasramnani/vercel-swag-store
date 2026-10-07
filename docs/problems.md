@@ -44,6 +44,27 @@ This is still true. `app/search/page.tsx` awaits `getCategories()` before it ret
 
 An early search page failed because the default export was not a function. A route file has to `export default` a function. That file does.
 
+## The product page showed "Loading product…" on every refresh
+
+Two commits on 2 Oct 2026 explain the wrappers. `ae3dc43` put Suspense only around stock. The photo and the name were read in the page, and `getProduct` was not cached. `8ec75eb` turned on `"use cache"` and, in the same change, moved the product into Suspense. The commit message is "fixed all cache errors by choosing suspense vs cache." Cache Components rejected `await params` in the page, because the id in the URL was not known when the shell was built. `"use cache"` saves `getProduct(id)`. It does not cover reading that id. The light-theme commit on 5 Oct split that one product hole into the photo and the name. Both still call the same cached function. Stock stayed its own hole because `getStock` is not cached.
+
+Reading the id is instant. The catalog call is the slow part. On a refresh the first HTML is the header, the footer, "Loading product…", and "Checking stock…". Then `getProduct` and `getStock` run side by side.
+
+Timed on `npm run dev`, 5 Oct 2026, `/products/black-crewneck-t-shirt`:
+
+| | Both sentences in the HTML | Shirt name in the response | "in stock" in the response |
+|---|---|---|---|
+| First request of that session | 0.90s | 3.44s | 4.53s |
+| Next request | 0.09s | 0.12s | 2.17s |
+
+On the second request the product was already saved, so the name followed the shell by a few hundredths of a second. The two seconds after that were the stock call. "Loading product…" is only the first HTML. It leaves when the saved product arrives. Stock stays up until the API answers. A refresh where both sentences stay up for the whole wait is a visit that is still calling `GET /products/{id}`.
+
+`generateStaticParams` in `app/products/[id]/page.tsx` asks `GET /api/products?limit=100` and returns each slug. On 5 Oct 2026 that list was 28 products, one page. The build saves a page per slug with the photo, name, price, and description already in the HTML. "Checking stock…" is still in that file. The number is not.
+
+The saved crewneck file from that build contains "Black Crewneck" and "Checking stock…". It does not contain "Loading product…". The generic `/products/[id]` shell still contains both sentences, for a slug that was not in the list. The build that produced this wrote 38 pages. Each concrete product path was a partial prerender, revalidate 15 minutes, expire 1 year. The earlier build the same day, before this function, had generated 9 pages and left every product URL on the generic shell. See [Measurements](measurements.md).
+
+`npm start` on port 3001, same evening, sent the crewneck name and "Checking stock…" at 0.07s. The stock number arrived at 3.2s. `npm run dev` does not serve that saved page, so a refresh there still flashes "Loading product…".
+
 ## Dev fetch log versus production
 
 `logging.fetches.fullUrl` made the dev terminal the place we counted API calls. Those lines are not what a `*.vercel.app` log shows. Production shows the page request. It does not show each catalog URL. The before-and-after cache counts in [Measurements](measurements.md) are from `npm run dev` on 2 Oct 2026.
